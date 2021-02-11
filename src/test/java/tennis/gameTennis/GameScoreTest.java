@@ -1,9 +1,7 @@
-package gameInterface;
+package tennis.gameTennis;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import tennis.gameTennis.GameScore;
-import tennis.gameTennis.TennisPlayerScore;
 
 import static org.junit.jupiter.api.Assertions.*;
 

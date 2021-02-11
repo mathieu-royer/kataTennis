@@ -4,7 +4,7 @@ import gameInterface.Score;
 
 public class GameScore implements Score {
 
-    private TennisPlayerScore[] players = new TennisPlayerScore[2] ;
+    protected TennisPlayerScore[] players = new TennisPlayerScore[2] ;
 
     public GameScore() {
         players[0] = TennisPlayerScore.ZERO;
@@ -13,8 +13,10 @@ public class GameScore implements Score {
 
     @Override
     public void addScorePlayer(int player) {
-        int numPlayer = player - 1;
-        this.players[numPlayer] = this.players[numPlayer].getNextScore();
+        if(!this.isFinish()) {
+            int numPlayer = player - 1;
+            this.players[numPlayer] = this.players[numPlayer].getNextScore();
+        }
     }
 
     @Override
