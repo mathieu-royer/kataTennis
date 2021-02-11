@@ -1,6 +1,6 @@
 package gameInterface;
 
-public interface SetTennisBuilder {
+public interface ScoreTennisBuilder {
 
     Score createScore();
 }

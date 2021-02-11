@@ -1,21 +1,21 @@
 package tennis.setTenis;
 
-import gameInterface.SetTennisBuilder;
+import gameInterface.ScoreTennisBuilder;
 
 public class SetScroreWithTieBreak extends SetScore{
 
-    private  SetTennisBuilder setTennisBuilderTiereak;
+    private ScoreTennisBuilder scoreTennisBuilderTiereak;
     private boolean isTieBreak = false;
 
-    public SetScroreWithTieBreak(SetTennisBuilder builderScore, SetTennisBuilder builderScoreTieBreak) {
+    public SetScroreWithTieBreak(ScoreTennisBuilder builderScore, ScoreTennisBuilder builderScoreTieBreak) {
         super(builderScore);
-        setTennisBuilderTiereak = builderScoreTieBreak;
+        scoreTennisBuilderTiereak = builderScoreTieBreak;
     }
 
     @Override
     public void addScorePlayer(int player) {
         if(this.isScorePlayer66() && !isTieBreak) {
-            super.currentScore = setTennisBuilderTiereak.createScore();
+            super.currentScore = scoreTennisBuilderTiereak.createScore();
             isTieBreak = true;
         }
         super.addScorePlayer(player);

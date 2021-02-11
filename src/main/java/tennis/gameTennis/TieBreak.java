@@ -57,4 +57,10 @@ public class TieBreak implements Score {
         return "Tie Break Score : playerOne = " + players[0] +
                 ", playerTwo = " + players[1];
     }
+
+    @Override
+    public String printScore() {
+        return this.toString();
+    }
+
 }

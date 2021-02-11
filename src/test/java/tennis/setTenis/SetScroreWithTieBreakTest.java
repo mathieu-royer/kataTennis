@@ -1,7 +1,7 @@
 package tennis.setTenis;
 
 import gameInterface.Score;
-import gameInterface.SetTennisBuilder;
+import gameInterface.ScoreTennisBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -18,9 +18,9 @@ class SetScroreWithTieBreakTest {
     @Mock
     Score tieBreakScore;
     @Mock
-    SetTennisBuilder setTennisBuilder;
+    ScoreTennisBuilder scoreTennisBuilder;
     @Mock
-    SetTennisBuilder setTennisBuilderTieBreak;
+    ScoreTennisBuilder scoreTennisBuilderTieBreak;
 
 
     @InjectMocks
@@ -30,10 +30,10 @@ class SetScroreWithTieBreakTest {
     public void init() {
         MockitoAnnotations.openMocks(this);
         Mockito.when( gameScore.isFinish() ).thenReturn( true );
-        Mockito.when( setTennisBuilder.createScore() ).thenReturn( gameScore );
+        Mockito.when( scoreTennisBuilder.createScore() ).thenReturn( gameScore );
         Mockito.when( tieBreakScore.isFinish() ).thenReturn( true );
-        Mockito.when( setTennisBuilderTieBreak.createScore() ).thenReturn( tieBreakScore );
-        setScore = new SetScroreWithTieBreak(setTennisBuilder, setTennisBuilderTieBreak);
+        Mockito.when( scoreTennisBuilderTieBreak.createScore() ).thenReturn( tieBreakScore );
+        setScore = new SetScroreWithTieBreak(scoreTennisBuilder, scoreTennisBuilderTieBreak);
     }
 
     private void setSetScorePlayerOneBeforeWin() {
@@ -42,11 +42,9 @@ class SetScroreWithTieBreakTest {
         setScore.addScorePlayer(1);
         setScore.addScorePlayer(1);
         setScore.addScorePlayer(1);
-        setScore.addScorePlayer(1);
     }
 
     private void setSetScorePlayerTwoBeforeWin() {
-        setScore.addScorePlayer(2);
         setScore.addScorePlayer(2);
         setScore.addScorePlayer(2);
         setScore.addScorePlayer(2);
@@ -86,8 +84,8 @@ class SetScroreWithTieBreakTest {
         this.setSetScorePlayerOneBeforeWin();
         setScore.addScorePlayer(1);
         assertTrue(setScore.isFinish());
-        Mockito.verify( gameScore, Mockito.times( 7 ) ).isFinish();
-        Mockito.verify( gameScore, Mockito.times( 7 ) ).getWinner();
+        Mockito.verify( gameScore, Mockito.times( 6 ) ).isFinish();
+        Mockito.verify( gameScore, Mockito.times( 6 ) ).getWinner();
     }
 
     @Test
@@ -96,8 +94,8 @@ class SetScroreWithTieBreakTest {
         this.setSetScorePlayerTwoBeforeWin();
         setScore.addScorePlayer(2);
         assertTrue(setScore.isFinish());
-        Mockito.verify( gameScore, Mockito.times( 7 ) ).isFinish();
-        Mockito.verify( gameScore, Mockito.times( 7 ) ).getWinner();
+        Mockito.verify( gameScore, Mockito.times( 6 ) ).isFinish();
+        Mockito.verify( gameScore, Mockito.times( 6 ) ).getWinner();
     }
 
     @Test
@@ -106,9 +104,13 @@ class SetScroreWithTieBreakTest {
         this.setSetScorePlayerTwoBeforeWin();
         Mockito.when( gameScore.getWinner() ).thenReturn( 1 );
         this.setSetScorePlayerOneBeforeWin();
-        Mockito.when( tieBreakScore.getWinner() ).thenReturn( 1 );;
-        this.setSetScorePlayerOneBeforeWin();
+        Mockito.when( gameScore.getWinner() ).thenReturn( 2 );
+        setScore.addScorePlayer(2);
+        Mockito.when( gameScore.getWinner() ).thenReturn( 1 );
         setScore.addScorePlayer(1);
+        Mockito.when( tieBreakScore.getWinner() ).thenReturn( 1 );
+        setScore.addScorePlayer(1);
+
         assertTrue(setScore.isFinish());
         assertEquals(1, setScore.getWinner());
         Mockito.verify( gameScore, Mockito.times( 12 ) ).isFinish();
@@ -135,9 +137,10 @@ class SetScroreWithTieBreakTest {
         Mockito.when( gameScore.getWinner() ).thenReturn( 1 );
         this.setSetScorePlayerOneBeforeWin();
         setScore.addScorePlayer(1);
+        setScore.addScorePlayer(1);
         assertEquals(1, setScore.getWinner());
-        Mockito.verify( gameScore, Mockito.times( 7 ) ).isFinish();
-        Mockito.verify( gameScore, Mockito.times( 7 ) ).getWinner();
+        Mockito.verify( gameScore, Mockito.times( 6 ) ).isFinish();
+        Mockito.verify( gameScore, Mockito.times( 6 ) ).getWinner();
     }
 
     @Test
@@ -145,9 +148,10 @@ class SetScroreWithTieBreakTest {
         Mockito.when( gameScore.getWinner() ).thenReturn( 2 );
         this.setSetScorePlayerTwoBeforeWin();
         setScore.addScorePlayer(2);
+        setScore.addScorePlayer(2);
         assertEquals(2, setScore.getWinner());
-        Mockito.verify( gameScore, Mockito.times( 7 ) ).isFinish();
-        Mockito.verify( gameScore, Mockito.times( 7 ) ).getWinner();
+        Mockito.verify( gameScore, Mockito.times( 6 ) ).isFinish();
+        Mockito.verify( gameScore, Mockito.times( 6 ) ).getWinner();
     }
 
     @Test

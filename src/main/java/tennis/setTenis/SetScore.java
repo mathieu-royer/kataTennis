@@ -1,21 +1,20 @@
 package tennis.setTenis;
 
 import gameInterface.Score;
-import gameInterface.SetTennisBuilder;
+import gameInterface.ScoreTennisBuilder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class SetScore implements Score {
     protected int[] players = new int[2];
     protected Score currentScore;
     protected ArrayList<Score> setGameScores = new ArrayList<>();
-    protected  SetTennisBuilder setTennisBuilder;
+    protected ScoreTennisBuilder scoreTennisBuilder;
 
-    public SetScore(SetTennisBuilder builderScore) {
+    public SetScore(ScoreTennisBuilder builderScore) {
        players[0] = 0;
        players[1] = 0;
-       setTennisBuilder = builderScore;
+       scoreTennisBuilder = builderScore;
        currentScore = builderScore.createScore();
     }
 
@@ -27,21 +26,25 @@ public class SetScore implements Score {
                 int gameWinner = this.currentScore.getWinner() - 1;
                 this.players[gameWinner] += 1;
                 this.setGameScores.add(this.currentScore);
-                this.currentScore = setTennisBuilder.createScore();
+                this.currentScore = scoreTennisBuilder.createScore();
             }
         }
     }
 
     @Override
     public boolean isFinish() {
-        return this.players[0] >= 7 || this.players[1] >= 7;
+        if(this.getWinner() != -1){
+            return true;
+        }
+        return false;
     }
 
     @Override
     public int getWinner() {
-        if(this.players[0] >= 7) {
+        if((this.players[0] >= 6 && this.players[0] - players[1] >= 2) || this.players[0] >= 7) {
             return 1;
-        } else if(this.players[1] >= 7) {
+
+        } else if((this.players[1] >= 6 && this.players[1] - players[0] >= 2) || this.players[1] >= 7) {
             return 2;
         } else {
             return -1;
@@ -60,5 +63,11 @@ public class SetScore implements Score {
     public String toString() {
         return "Set Score : playerOne = " + players[0] +
                 ", playerTwo = " + players[1];
+    }
+
+    @Override
+    public String printScore() {
+        return this.currentScore.printScore() + System.lineSeparator() +
+                this.toString();
     }
 }

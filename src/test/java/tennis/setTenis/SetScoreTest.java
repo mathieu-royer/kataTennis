@@ -1,7 +1,7 @@
 package tennis.setTenis;
 
 import gameInterface.Score;
-import gameInterface.SetTennisBuilder;
+import gameInterface.ScoreTennisBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -16,7 +16,7 @@ class SetScoreTest {
     @Mock
     Score gameScore;
     @Mock
-    SetTennisBuilder setTennisBuilder;
+    ScoreTennisBuilder scoreTennisBuilder;
 
 
     @InjectMocks
@@ -26,8 +26,8 @@ class SetScoreTest {
     public void init() {
         MockitoAnnotations.openMocks(this);
         Mockito.when( gameScore.isFinish() ).thenReturn( true );
-        Mockito.when( setTennisBuilder.createScore() ).thenReturn( gameScore );
-        setScore = new SetScore(setTennisBuilder);
+        Mockito.when( scoreTennisBuilder.createScore() ).thenReturn( gameScore );
+        setScore = new SetScore(scoreTennisBuilder);
 
     }
 
@@ -49,6 +49,26 @@ class SetScoreTest {
         setScore.addScorePlayer(2);
         setScore.addScorePlayer(2);
         setScore.addScorePlayer(2);
+    }
+
+    private void setSetScorePlayerToWinWith7() {
+        Mockito.when( gameScore.getWinner() ).thenReturn( 1 );
+        setScore.addScorePlayer(1);
+        setScore.addScorePlayer(1);
+        setScore.addScorePlayer(1);
+        setScore.addScorePlayer(1);
+        setScore.addScorePlayer(1);
+
+        Mockito.when( gameScore.getWinner() ).thenReturn( 2 );
+        setScore.addScorePlayer(2);
+        setScore.addScorePlayer(2);
+        setScore.addScorePlayer(2);
+        setScore.addScorePlayer(2);
+        setScore.addScorePlayer(2);
+
+        Mockito.when( gameScore.getWinner() ).thenReturn( 1 );
+        setScore.addScorePlayer(1);
+        setScore.addScorePlayer(1);
     }
 
     @Test
@@ -82,8 +102,8 @@ class SetScoreTest {
         Mockito.when( gameScore.getWinner() ).thenReturn( 1 );
         this.setSetScorePlayerOneToWin();
         assertTrue(setScore.isFinish());
-        Mockito.verify( gameScore, Mockito.times( 7 ) ).isFinish();
-        Mockito.verify( gameScore, Mockito.times( 7 ) ).getWinner();
+        Mockito.verify( gameScore, Mockito.times( 6 ) ).isFinish();
+        Mockito.verify( gameScore, Mockito.times( 6 ) ).getWinner();
     }
 
     @Test
@@ -91,8 +111,17 @@ class SetScoreTest {
         Mockito.when( gameScore.getWinner() ).thenReturn( 2 );
         this.setSetScorePlayerTwoToWin();
         assertTrue(setScore.isFinish());
-        Mockito.verify( gameScore, Mockito.times( 7 ) ).isFinish();
-        Mockito.verify( gameScore, Mockito.times( 7 ) ).getWinner();
+        Mockito.verify( gameScore, Mockito.times( 6 ) ).isFinish();
+        Mockito.verify( gameScore, Mockito.times( 6 ) ).getWinner();
+    }
+
+    @Test
+    public void testIsFinishByPlayerWithScore7() {
+        this.setSetScorePlayerToWinWith7();
+        assertTrue(setScore.isFinish());
+        assertEquals(7, setScore.getScorePlayerOne());
+        Mockito.verify( gameScore, Mockito.times( 12 ) ).isFinish();
+        Mockito.verify( gameScore, Mockito.times( 12 ) ).getWinner();
     }
 
     @Test
@@ -112,8 +141,8 @@ class SetScoreTest {
         Mockito.when( gameScore.getWinner() ).thenReturn( 1 );
         this.setSetScorePlayerOneToWin();
         assertEquals(1, setScore.getWinner());
-        Mockito.verify( gameScore, Mockito.times( 7 ) ).isFinish();
-        Mockito.verify( gameScore, Mockito.times( 7 ) ).getWinner();
+        Mockito.verify( gameScore, Mockito.times( 6 ) ).isFinish();
+        Mockito.verify( gameScore, Mockito.times( 6 ) ).getWinner();
     }
 
     @Test
@@ -121,8 +150,8 @@ class SetScoreTest {
         Mockito.when( gameScore.getWinner() ).thenReturn( 2 );
         this.setSetScorePlayerTwoToWin();
         assertEquals(2, setScore.getWinner());
-        Mockito.verify( gameScore, Mockito.times( 7 ) ).isFinish();
-        Mockito.verify( gameScore, Mockito.times( 7 ) ).getWinner();
+        Mockito.verify( gameScore, Mockito.times( 6 ) ).isFinish();
+        Mockito.verify( gameScore, Mockito.times( 6 ) ).getWinner();
     }
 
     @Test

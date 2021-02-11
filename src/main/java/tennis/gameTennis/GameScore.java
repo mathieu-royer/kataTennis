@@ -10,7 +10,8 @@ public class GameScore implements Score {
         players[0] = TennisPlayerScore.ZERO;
         players[1] = TennisPlayerScore.ZERO;
     }
-
+    
+    
     @Override
     public void addScorePlayer(int player) {
         if(!this.isFinish()) {
@@ -48,4 +49,10 @@ public class GameScore implements Score {
     public TennisPlayerScore getScorePlayerTwo() {
         return this.players[1];
     }
+
+    @Override
+    public String printScore() {
+        return this.toString();
+    }
+
 }
