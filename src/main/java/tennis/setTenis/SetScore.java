@@ -4,6 +4,7 @@ import gameInterface.Score;
 import gameInterface.SetTennisBuilder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SetScore implements Score {
     protected int[] players = new int[2];
@@ -53,5 +54,11 @@ public class SetScore implements Score {
 
     public int getScorePlayerTwo() {
         return players[1];
+    }
+
+    @Override
+    public String toString() {
+        return "Set Score : playerOne = " + players[0] +
+                ", playerTwo = " + players[1];
     }
 }
